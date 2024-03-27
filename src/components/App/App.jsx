@@ -19,13 +19,14 @@ const App = () => {
   });
 
   useEffect(() => {
-    window.localStorage.setItem(
-      "saved-feedbacks",
-      JSON.stringify(feedbacks)
-    );
+    window.localStorage.setItem("saved-feedbacks", JSON.stringify(feedbacks));
   }, [feedbacks]);
 
   const totalFeedbacks = feedbacks.good + feedbacks.neutral + feedbacks.bad;
+  const positiveFeedbacks =
+    totalFeedbacks > 0
+      ? Math.round((feedbacks.good / totalFeedbacks) * 100)
+      : 0;
 
   const updateFeedback = (feedbackType) => {
     setFeedbacks({
@@ -34,16 +35,28 @@ const App = () => {
     });
   };
 
+  const resetFeedback = () => {
+    setFeedbacks({
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    });
+  }
+
   return (
     <div className={styles.mainContainer}>
       <Description />
       <Options
         fooUpdateFeedback={updateFeedback}
         totalFeedbacks={totalFeedbacks}
-        setFeedbacks={setFeedbacks}
+        resetFeedback={resetFeedback}
       />
       {totalFeedbacks > 0 ? (
-        <Feedback feedbacks={feedbacks} totalFeedbacks={totalFeedbacks} />
+        <Feedback
+          feedbacks={feedbacks}
+          positiveFeedbacks={positiveFeedbacks}
+          totalFeedbacks={totalFeedbacks}
+        />
       ) : (
         <Notification />
       )}

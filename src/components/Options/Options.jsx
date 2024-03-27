@@ -1,6 +1,6 @@
 import styles from "./Options.module.css";
 
-const Options = ({ fooUpdateFeedback, totalFeedbacks, setFeedbacks }) => {
+const Options = ({ fooUpdateFeedback, totalFeedbacks, resetFeedback }) => {
   return (
     <ul className={styles.optionsList}>
       <li>
@@ -14,17 +14,7 @@ const Options = ({ fooUpdateFeedback, totalFeedbacks, setFeedbacks }) => {
       </li>
       {totalFeedbacks > 0 && (
         <li>
-          <button
-            onClick={() =>
-              setFeedbacks({
-                good: 0,
-                neutral: 0,
-                bad: 0,
-              })
-            }
-          >
-            Reset
-          </button>
+          <button onClick={resetFeedback}>Reset</button>
         </li>
       )}
     </ul>
